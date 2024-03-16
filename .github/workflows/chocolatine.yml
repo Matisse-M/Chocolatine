@@ -15,7 +15,7 @@ on:
     branches-ignore:
       - "ga-ignore-*"
 
-environement:
+env:
   - MIRROR_URL=git@github.com:EpitechPromo2028/B-DOP-200-NAN-2-1-chocolatine-matisse.marsac.git
   - EXECUTABLES=
 
@@ -29,6 +29,7 @@ jobs:
         uses: actions/checkout@v4
       - name: run-coding-style
         run: check.sh $(pwd) $(pwd)
+      - name: display-all-errors
       - name: continue
         run: |
           if [ -s coding-style-reports.log" ]; then
