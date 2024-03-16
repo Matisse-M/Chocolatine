@@ -30,12 +30,10 @@ jobs:
         run: check.sh $(pwd) $(pwd)
       - name: continue
         run: |
-          if [ ! -s coding-style-reports.log" ]; then
-            printf("oui\n");
-            exit 0
-          else
-            printf("non\n");
+          if [ -s coding-style-reports.log ]; then
             exit 1
+          else
+            exit 0
           fi
   # check_program_compilation:
   # run_tests:
