@@ -16,8 +16,7 @@ on:
       - "ga-ignore-*"
 
 env:
-  - MIRROR_URL=git@github.com:EpitechPromo2028/B-DOP-200-NAN-2-1-chocolatine-matisse.marsac.git
-  - EXECUTABLES=
+  - MIRROR_URL: git@github.com:EpitechPromo2028/B-DOP-200-NAN-2-1-chocolatine-matisse.marsac.git
 
 jobs:
   check_coding_style:
