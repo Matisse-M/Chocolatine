@@ -29,7 +29,6 @@ jobs:
         uses: actions/checkout@v4
       - name: run-coding-style
         run: check.sh $(pwd) $(pwd)
-      - name: display-all-errors
       - name: continue
         run: |
           if [ -s coding-style-reports.log" ]; then
