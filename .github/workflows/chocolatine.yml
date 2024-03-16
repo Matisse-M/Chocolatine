@@ -31,8 +31,10 @@ jobs:
       - name: continue
         run: |
           if [ ! -s coding-style-reports.log" ]; then
+            printf("oui\n");
             exit 0
           else
+            printf("non\n");
             exit 1
           fi
   # check_program_compilation:
