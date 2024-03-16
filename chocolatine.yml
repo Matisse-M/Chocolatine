@@ -1,0 +1,34 @@
+##
+## EPITECH PROJECT, 2023
+## chocolatine
+## File description:
+## First use of github workflow
+##
+
+name: chocolatine
+
+on:
+  push:
+    branches-ignore:
+      - "ga-ignore-*"
+  pull-request:
+    branches-ignore:
+      - "ga-ignore-*"
+
+environement:
+  - MIRROR_URL=git@github.com:EpitechPromo2028/B-DOP-200-NAN-2-1-chocolatine-matisse.marsac.git
+  - EXECUTABLES=
+
+jobs:
+  check_coding_style:
+    container:
+      image: ghcr.io/epitech/coding-style-checker:latest
+    steps:
+      - name: run-coding-style
+        uses: actions/checkout@v4
+        run: check.sh $(pwd) $(pwd)
+      - name: display-all-errors
+      - name: continue
+  # check_program_compilation:
+  # run_tests:
+  # push_to_mirror:
