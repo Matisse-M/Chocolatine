@@ -11,7 +11,7 @@ on:
   push:
     branches-ignore:
       - "ga-ignore-*"
-  pull-request:
+  pull_request:
     branches-ignore:
       - "ga-ignore-*"
 
