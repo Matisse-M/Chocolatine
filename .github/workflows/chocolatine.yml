@@ -25,8 +25,9 @@ jobs:
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
     steps:
-      - name: run-coding-style
+      - name: checkout-v4
         uses: actions/checkout@v4
+      - name: run-coding-style
         run: check.sh $(pwd) $(pwd)
       - name: display-all-errors
       - name: continue
