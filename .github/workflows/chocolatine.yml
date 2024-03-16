@@ -30,10 +30,10 @@ jobs:
         run: check.sh $(pwd) $(pwd)
       - name: continue
         run: |
-          if [ -s coding-style-reports.log" ]; then
-            exit 1
-          else
+          if [ ! -s coding-style-reports.log" ]; then
             exit 0
+          else
+            exit 1
           fi
   # check_program_compilation:
   # run_tests:
