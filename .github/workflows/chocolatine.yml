@@ -37,7 +37,7 @@ jobs:
             NAME=$(echo $temp | cut -d '/' -f 2)
             LINE=$(echo $line | cut -d ':' -f 2)
             NBR=$(echo $line | cut -d ':' -f 4)
-            printf "::error col=1-2::${TYPE} coding style error: ${NAME}#L${LINE}\n${NBR}\n"
+            printf "::error::%s coding style error: %s#L%s\n%s\n" "$TYPE" "$NAME" "$LINE" "$NBR"
           done
       - name: continue
         run: |
