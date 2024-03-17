@@ -28,7 +28,15 @@ jobs:
         uses: actions/checkout@v4
       - name: run-coding-style
         run: check.sh $(pwd) $(pwd)
+      - name: continue
+        run: |
+          if [ -s coding-style-reports.log ]; then
+            exit 1
+          else
+            exit 0
+          fi
       - name: check_any_error
+        if: ${{ failure() }}
         run: |
           cat coding-style-reports.log | while read line; do
             TYPE=$(echo $line | cut -d ':' -f 3 | cut -c 2-)
@@ -37,13 +45,6 @@ jobs:
             LINE=$(echo $line | cut -d ':' -f 2)
             echo "::error col=1::${TYPE} coding style error: ${NAME}#L${LINE}"
           done
-      - name: continue
-        run: |
-          if [ -s coding-style-reports.log ]; then
-            exit 1
-          else
-            exit 0
-          fi
   # check_program_compilation:
   # run_tests:
   # push_to_mirror:
