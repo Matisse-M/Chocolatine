@@ -17,6 +17,7 @@ on:
 
 env:
   MIRROR_URL: git@github.com:EpitechPromo2028/B-DOP-200-NAN-2-1-chocolatine-matisse.marsac.git
+  EXECUTABLES: a.out
 
 jobs:
   check_coding_style:
@@ -45,6 +46,29 @@ jobs:
           else
             exit 0
           fi
-  # check_program_compilation:
+
+  check_program_compilation:
+    needs: check_coding_style
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker:latest
+    steps:
+      - name: checkout-v4
+        uses: actions/checkout@v4
+      - name: run-compilation
+        run: make
+        timeout-minutes: 2
+      - name: run-clean
+        run: |
+          make clean
+      - name: check-executables
+        run: |
+          for file in $EXECUTABLES; do
+            if [ ! -x "$file" ]; then
+              echo "$file does not exist or is not executable"
+              exit 1
+            fi
+          done
+          exit 0
   # run_tests:
   # push_to_mirror:
