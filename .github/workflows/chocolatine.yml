@@ -29,7 +29,6 @@ jobs:
       - name: run-coding-style
         run: check.sh $(pwd) $(pwd)
       - name: check_any_error
-        if: ${{ failure() }}
         run: |
           cat coding-style-reports.log | while read line; do
             TYPE=$(echo $line | cut -d ':' -f 3 | cut -c 2-)
