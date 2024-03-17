@@ -35,7 +35,7 @@ jobs:
             temp=$(echo $line | cut -d ':' -f 1)
             NAME=$(echo $temp | cut -d '/' -f 2)
             LINE=$(echo $line | cut -d ':' -f 2)
-            echo "::notice::${TYPE} coding style error: ${NAME}#L${LINE}"
+            echo "::warning::${TYPE} coding style error: ${NAME}#L${LINE}"
           done
       - name: continue
         run: |
