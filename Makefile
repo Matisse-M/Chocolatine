@@ -9,7 +9,7 @@ SRC		=	main.c
 
 OBJ 	= 	$(SRC:.c=.o)
 
-NAME	= 	caca
+NAME	= 	a.out
 
 CFLAGS 	=	-I ./include
 
