@@ -86,7 +86,8 @@ jobs:
         with:
           fetch-depth: 0
       - name: check-banned
-        run: IFS=',' read -ra array <<< "$EXECUTABLES"
+        run: |
+          IFS=',' read -ra array <<< "$EXECUTABLES"
           for arg in "${array[@]}"; do
             commands=nm "$arg" | grep "U " | cut -d 'U' -f 2 | cut -d '@' -f1
             for cmd in "${commands}"; do
