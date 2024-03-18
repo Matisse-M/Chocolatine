@@ -26,9 +26,10 @@ jobs:
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: checkout@v4
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
       - name: run-coding-style
         run: check.sh $(pwd) $(pwd)
       - name: check_any_error
@@ -55,7 +56,7 @@ jobs:
     container:
       image: epitechcontent/epitest-docker:latest
     steps:
-      - name: checkout-v4
+      - name: checkout@v4
         - uses: actions/checkout@v4
           with:
             fetch-depth: 0
@@ -82,7 +83,8 @@ jobs:
     container:
       image: epitechcontent/epitest-docker:latest
     steps:
-      - uses: actions/checkout@v4
+      - name: checkout@v4
+        - uses: actions/checkout@v4
           with:
             fetch-depth: 0
       - name: run-tests
@@ -93,7 +95,8 @@ jobs:
     needs: run_tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: checkout@v4
+        - uses: actions/checkout@v4
           with:
             fetch-depth: 0
       - name: mirroring
