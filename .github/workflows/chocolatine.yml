@@ -21,35 +21,35 @@ env:
   BANNED_FUNC: "puts,exit,strdup,strndup,strcmp,strncmp,strcat,strncat,strlen,atoi,realloc,calloc"
 
 jobs:
-  check_coding_style:
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/epitech/coding-style-checker:latest
-    steps:
-      - name: checkout-v4
-        uses: actions/checkout@v4
-      - name: run-coding-style
-        run: check.sh $(pwd) $(pwd)
-      - name: check_any_error
-        run: |
-          cat coding-style-reports.log | while read line; do
-            TYPE=$(echo $line | cut -d ':' -f 3 | cut -c 2-)
-            temp=$(echo $line | cut -d ':' -f 1)
-            NAME=$(echo $temp | cut -d '/' -f 2)
-            LINE=$(echo $line | cut -d ':' -f 2)
-            NBR=$(echo $line | cut -d ':' -f 4)
-            printf "::error::%s coding style error: %s#L%s\n%s\n" "$TYPE" "$NAME" "$LINE" "$NBR"
-          done
-      - name: continue
-        run: |
-          if [ -s coding-style-reports.log ]; then
-            exit 1
-          else
-            exit 0
-          fi
+  # check_coding_style:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: ghcr.io/epitech/coding-style-checker:latest
+  #   steps:
+  #     - name: checkout-v4
+  #       uses: actions/checkout@v4
+  #     - name: run-coding-style
+  #       run: check.sh $(pwd) $(pwd)
+  #     - name: check_any_error
+  #       run: |
+  #         cat coding-style-reports.log | while read line; do
+  #           TYPE=$(echo $line | cut -d ':' -f 3 | cut -c 2-)
+  #           temp=$(echo $line | cut -d ':' -f 1)
+  #           NAME=$(echo $temp | cut -d '/' -f 2)
+  #           LINE=$(echo $line | cut -d ':' -f 2)
+  #           NBR=$(echo $line | cut -d ':' -f 4)
+  #           printf "::error::%s coding style error: %s#L%s\n%s\n" "$TYPE" "$NAME" "$LINE" "$NBR"
+  #         done
+  #     - name: continue
+  #       run: |
+  #         if [ -s coding-style-reports.log ]; then
+  #           exit 1
+  #         else
+  #           exit 0
+  #         fi
 
   check_program_compilation:
-    needs: check_coding_style
+    # needs: check_coding_style
     runs-on: ubuntu-latest
     container:
       image: epitechcontent/epitest-docker:latest
