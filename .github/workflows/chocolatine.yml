@@ -21,8 +21,8 @@ env:
   AUTHORIZED: "write,malloc,free"
 
 jobs:
-  if: ${{ github.repositoy != $MIRROR_URL }}
   check_coding_style:
+    if: ${{ github.repositoy != $MIRROR_URL }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
