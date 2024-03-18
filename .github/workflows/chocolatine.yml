@@ -96,7 +96,7 @@ jobs:
             for cmd in "${commands}"; do
               for func in "$AUTHORIZED"; do
                 if [ "$cmd" != "$func" ]; then
-                  printf "::error::Invalid use of %s" "$CMD"
+                  printf "::error::Invalid use of %s" "$cmd"
                   exit 1
                 fi
               done
