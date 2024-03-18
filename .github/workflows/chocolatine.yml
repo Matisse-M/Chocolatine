@@ -9,7 +9,6 @@ name: chocolatine
 
 on:
   push:
-    if (github.repository)
     branches-ignore:
       - "ga-ignore-*"
   pull_request:
