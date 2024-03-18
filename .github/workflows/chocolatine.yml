@@ -85,6 +85,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: run-compilation
+        run: make
+        timeout-minutes: 2
       - name: check-banned
         run: |
           IFS=',' read -ra array <<< "$EXECUTABLES"
