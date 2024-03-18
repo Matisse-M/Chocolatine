@@ -32,8 +32,8 @@ jobs:
           fetch-depth: 0
       - name: is_correct_repository
         run: temp=$(echo $MIRROR_URL | cut -d ':' -f 2)
-          echo $temp
-          echo github.repository
+          printf "::warning::%s\n" "$temp"
+          printf "::warning::%s\n" "github.repository"
       - name: run-coding-style
         run: check.sh $(pwd) $(pwd)
       - name: check_any_error
