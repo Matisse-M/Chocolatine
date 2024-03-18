@@ -17,45 +17,48 @@ on:
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2028/B-DOP-200-NAN-2-1-chocolatine-matisse.marsac.git"
-  EXECUTABLES: "a.out,caca"
+  EXECUTABLES: "a.out"
   BANNED_FUNC: "puts,exit,strdup,strndup,strcmp,strncmp,strcat,strncat,strlen,atoi,realloc,calloc"
 
 jobs:
-  # check_coding_style:
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: ghcr.io/epitech/coding-style-checker:latest
-  #   steps:
-  #     - name: checkout-v4
-  #       uses: actions/checkout@v4
-  #     - name: run-coding-style
-  #       run: check.sh $(pwd) $(pwd)
-  #     - name: check_any_error
-  #       run: |
-  #         cat coding-style-reports.log | while read line; do
-  #           TYPE=$(echo $line | cut -d ':' -f 3 | cut -c 2-)
-  #           temp=$(echo $line | cut -d ':' -f 1)
-  #           NAME=$(echo $temp | cut -d '/' -f 2)
-  #           LINE=$(echo $line | cut -d ':' -f 2)
-  #           NBR=$(echo $line | cut -d ':' -f 4)
-  #           printf "::error::%s coding style error: %s#L%s\n%s\n" "$TYPE" "$NAME" "$LINE" "$NBR"
-  #         done
-  #     - name: continue
-  #       run: |
-  #         if [ -s coding-style-reports.log ]; then
-  #           exit 1
-  #         else
-  #           exit 0
-  #         fi
+  check_coding_style:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/epitech/coding-style-checker:latest
+    steps:
+      - uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+      - name: run-coding-style
+        run: check.sh $(pwd) $(pwd)
+      - name: check_any_error
+        run: |
+          cat coding-style-reports.log | while read line; do
+            TYPE=$(echo $line | cut -d ':' -f 3 | cut -c 2-)
+            temp=$(echo $line | cut -d ':' -f 1)
+            NAME=$(echo $temp | cut -d '/' -f 2)
+            LINE=$(echo $line | cut -d ':' -f 2)
+            NBR=$(echo $line | cut -d ':' -f 4)
+            printf "::error::%s coding style error: %s#L%s\n%s\n" "$TYPE" "$NAME" "$LINE" "$NBR"
+          done
+      - name: continue
+        run: |
+          if [ -s coding-style-reports.log ]; then
+            exit 1
+          else
+            exit 0
+          fi
 
   check_program_compilation:
-    # needs: check_coding_style
+    needs: check_coding_style
     runs-on: ubuntu-latest
     container:
       image: epitechcontent/epitest-docker:latest
     steps:
       - name: checkout-v4
-        uses: actions/checkout@v4
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
       - name: run-compilation
         run: make
         timeout-minutes: 2
@@ -64,8 +67,8 @@ jobs:
           make clean
       - name: check-executables
         run: |
-          IFS=',' read -ra arg_array <<< "$EXECUTABLES"
-          for arg in "${arg_array[@]}"; do
+          IFS=',' read -ra array <<< "$EXECUTABLES"
+          for arg in "${array[@]}"; do
             if [ ! -x "$arg" ]; then
               printf "::error::%s does not exist or is not executable" "$arg"
               exit 1
@@ -79,8 +82,9 @@ jobs:
     container:
       image: epitechcontent/epitest-docker:latest
     steps:
-      - name: checkout-v4
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
       - name: run-tests
         run: make tests_run
         timeout-minutes: 2
@@ -89,8 +93,9 @@ jobs:
     needs: run_tests
     runs-on: ubuntu-latest
     steps:
-      - name: checkout-v4
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
       - name: mirroring
         uses: pixta-dev/repository-mirroring-action@v1
         with:
