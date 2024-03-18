@@ -17,7 +17,7 @@ on:
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2028/B-DOP-200-NAN-2-1-chocolatine-matisse.marsac.git"
-  EXECUTABLES: "a.out"
+  EXECUTABLES: "my_paint,lib/libmy.a,lib/libcsfml.a"
   BANNED_FUNC: "puts,exit,strdup,strndup,strcmp,strncmp,strcat,strncat,strlen,atoi,realloc,calloc"
 
 jobs:
