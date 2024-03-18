@@ -99,7 +99,7 @@ jobs:
           exit 0
 
   run_tests:
-    needs: check_program_compilation
+    needs: check_banned_functions
     runs-on: ubuntu-latest
     container:
       image: epitechcontent/epitest-docker:latest
