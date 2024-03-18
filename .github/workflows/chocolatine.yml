@@ -66,8 +66,8 @@ jobs:
         run: |
           IFS=',' read -ra arg_array <<< "$EXECUTABLES"
           for arg in "${arg_array[@]}"; do
-            if [ ! -x "$file" ]; then
-              printf "::error::%s does not exist or is not executable" "$file"
+            if [ ! -x "$arg" ]; then
+              printf "::error::%s does not exist or is not executable" "$arg"
               exit 1
             fi
           done
