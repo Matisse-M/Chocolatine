@@ -16,8 +16,9 @@ on:
       - "ga-ignore-*"
 
 env:
-  MIRROR_URL: git@github.com:EpitechPromo2028/B-DOP-200-NAN-2-1-chocolatine-matisse.marsac.git
-  EXECUTABLES: a.out
+  MIRROR_URL: "git@github.com:EpitechPromo2028/B-DOP-200-NAN-2-1-chocolatine-matisse.marsac.git"
+  EXECUTABLES: "a.out,caca"
+  BANNED_FUNC: "puts,exit,strdup,strndup,strcmp,strncmp,strcat,strncat,strlen,atoi,realloc,calloc"
 
 jobs:
   check_coding_style:
@@ -65,7 +66,7 @@ jobs:
         run: |
           for file in $EXECUTABLES; do
             if [ ! -x "$file" ]; then
-              echo "$file does not exist or is not executable"
+              printf "::error::%s does not exist or is not executable" "$file"
               exit 1
             fi
           done
