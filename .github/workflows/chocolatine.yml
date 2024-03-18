@@ -9,6 +9,7 @@ name: chocolatine
 
 on:
   push:
+    if (github.repository)
     branches-ignore:
       - "ga-ignore-*"
   pull_request:
@@ -21,6 +22,7 @@ env:
   AUTHORIZED: "write,malloc,free"
 
 jobs:
+  if: ${{ github.repositoy != $MIRROR_URL }}
   check_coding_style:
     runs-on: ubuntu-latest
     container:
