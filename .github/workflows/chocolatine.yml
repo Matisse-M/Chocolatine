@@ -22,7 +22,6 @@ env:
 
 jobs:
   check_coding_style:
-    if: ! github.repository == MIRROR_URL
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
@@ -31,6 +30,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: is_correct_repository
+        run: temp=$(echo $MIRROR_URL | cut -d ':' -f 2)
+          echo $temp
+          echo github.repository
       - name: run-coding-style
         run: check.sh $(pwd) $(pwd)
       - name: check_any_error
