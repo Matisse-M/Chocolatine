@@ -70,7 +70,7 @@ jobs:
         run: |
           IFS=',' read -ra array <<< "$EXECUTABLES"
           for arg in "${array[@]}"; do
-            if [ ! -x "$arg" ]; then
+            if [ ! -x "$(command -v "$exe")" ]; then
               printf "::error::%s does not exist or is not executable" "$arg"
               exit 1
             fi
