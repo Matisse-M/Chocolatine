@@ -26,14 +26,16 @@ jobs:
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
     steps:
+      - name: is_correct_repository
+        run: temp=$(echo $MIRROR_URL | cut -d ':' -f 2 | sed "s/\.git//") ;
+          if [ temp = ${{ github.repository }} ]; then
+            printf "::error::The current repository is also the target repository\n"
+            exit 0
+          fi
       - name: checkout@v4
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: is_correct_repository
-        run: temp=$(echo $MIRROR_URL | cut -d ':' -f 2 | sed "s/\.git//")
-          if [ temp = ${{ github.repository }} ]
-            exit 0
       - name: run-coding-style
         run: check.sh $(pwd) $(pwd)
       - name: check_any_error
