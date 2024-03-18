@@ -21,18 +21,27 @@ env:
   AUTHORIZED: "write,malloc,free"
 
 jobs:
-  check_coding_style:
+  check_repository:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/epitech/coding-style-checker:latest
     steps:
-      - name: is_correct_repository
+      - name: checkout@v4
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: repository-name
         run: |
           temp=$(echo $MIRROR_URL | cut -d ':' -f 2 | sed "s/\.git//")
           if [ $temp = ${{ github.repository }} ]; then
             printf "::notice::The current repository is also the target repository\n"
             exit 1
           fi
+
+  check_coding_style:
+    needs: check_repository
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/epitech/coding-style-checker:latest
+    steps:
       - name: checkout@v4
         uses: actions/checkout@v4
         with:
