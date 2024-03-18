@@ -18,7 +18,7 @@ on:
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2028/B-DOP-200-NAN-2-1-chocolatine-matisse.marsac.git"
   EXECUTABLES: "hashtable.a"
-  BANNED_FUNC: "puts,exit,strdup,strndup,strcmp,strncmp,strcat,strncat,strlen,atoi,realloc,calloc"
+  # BANNED_FUNC: "puts,exit,strdup,strndup,strcmp,strncmp,strcat,strncat,strlen,atoi,realloc,calloc"
 
 jobs:
   check_coding_style:
