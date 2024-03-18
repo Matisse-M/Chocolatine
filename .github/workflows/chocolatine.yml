@@ -90,10 +90,12 @@ jobs:
           for arg in "${array[@]}"; do
             commands=nm "$arg" | grep "U " | cut -d 'U' -f 2 | cut -d '@' -f1
             for cmd in "${commands}"; do
-              if [ "$cmd" = "$2arg" ]; then
-                printf "::error::Invalid use of %s" "$CMD"
-                exit 1
-              fi
+              for func in "$AUTHORIZED" ; do
+                if [ "$cmd" = "$func" ]; then
+                  printf "::error::Invalid use of %s" "$CMD"
+                  exit 1
+                fi
+              done
             done
           done
           exit 0
