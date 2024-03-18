@@ -30,7 +30,7 @@ jobs:
         run: temp=$(echo $MIRROR_URL | cut -d ':' -f 2 | sed "s/\.git//") ;
           if [ temp = ${{ github.repository }} ]; then
             printf "::error::The current repository is also the target repository\n"
-            exit 0
+            exit 1
           fi
       - name: checkout@v4
         uses: actions/checkout@v4
