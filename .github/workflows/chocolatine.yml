@@ -64,7 +64,8 @@ jobs:
           make clean
       - name: check-executables
         run: |
-          for file in $EXECUTABLES; do
+          IFS=',' read -ra arg_array <<< "$EXECUTABLES"
+          for arg in "${arg_array[@]}"; do
             if [ ! -x "$file" ]; then
               printf "::error::%s does not exist or is not executable" "$file"
               exit 1
