@@ -95,6 +95,7 @@ jobs:
             commands=nm "$arg" | grep "U " | cut -d 'U' -f 2 | cut -d '@' -f1
             for cmd in "${commands}"; do
               for func in "$AUTHORIZED"; do
+                printf "%s -- %s\n" "$cmd" "$func"
                 if [ "$cmd" != "$func" ]; then
                   printf "::error::Invalid use of %s" "$cmd"
                   exit 1
