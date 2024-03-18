@@ -22,7 +22,7 @@ env:
 
 jobs:
   check_coding_style:
-    if: ${{ github.repositoy != env.MIRROR_URL }}
+    if: ${{ github.repositoy != "env.MIRROR_URL" }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
