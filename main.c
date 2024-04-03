@@ -14,7 +14,7 @@ hashtable_t *test_2(hashtable_t *ht)
     mini_printf("both empty \n");
     ht_insert(ht, "", "");
     mini_printf("both null\n");
-    ht_insert(ht, NULL, NULL);
+    ht_insert(ht, NULL, NULL);aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     ht_search(ht, NULL);
     ht_search(ht, "");
     ht_delete(ht, "02");
