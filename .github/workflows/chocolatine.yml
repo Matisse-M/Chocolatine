@@ -59,7 +59,7 @@ jobs:
             LINE=$(echo $line | cut -d ':' -f 2)
             NBR=$(echo $line | cut -d ':' -f 4)
             ERROR="printf "%s coding style error: %s#L%s" "$TYPE" "$NAME" "$LINE""
-            echo "::error title=$ERROR,file=$NAME,line=$LINE::$NBR\n"
+            echo "::error title=$ERROR::$NBR\n"
           done
 
       - name: continue
