@@ -58,7 +58,7 @@ jobs:
             NAME=$(echo $temp | cut -d '/' -f 2)
             LINE=$(echo $line | cut -d ':' -f 2)
             NBR=$(echo $line | cut -d ':' -f 4)
-            printf "::error title=%s coding style error: %s#L%s,file=%s,line=%s::%s\n" "$TYPE" "$NAME" "$LINE" "$NAME"  "$LINE" "$NBR"
+            printf "::error title=${%s coding style error: %s#L%s},file=%s,line=%s::%s\n" "$TYPE" "$NAME" "$LINE" "$NAME"  "$LINE" "$NBR"
           done
 
       - name: continue
