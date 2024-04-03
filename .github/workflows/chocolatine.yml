@@ -29,7 +29,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: repository-name
+      - name: Check Target Repository
         run: |
           temp=$(echo $MIRROR_URL | cut -d ':' -f 2 | sed "s/\.git//")
           if [ $temp = ${{ github.repository }} ]; then
@@ -47,10 +47,10 @@ jobs:
       - name: checkout@v4
         uses: actions/checkout@v4
 
-      - name: run-coding-style
+      - name: Run Coding-Style-Checker
         run: check.sh $(pwd) $(pwd)
 
-      - name: check_any_error
+      - name: Check Any Error
         run: |
           cat coding-style-reports.log | while read line; do
             TYPE=$(echo $line | cut -d ':' -f 3 | cut -c 2-)
@@ -75,13 +75,12 @@ jobs:
     steps:
       - name: checkout@v4
         uses: actions/checkout@v4
-      - name: run-compilation
+      - name: Compilation
         run: make
         timeout-minutes: 2
-      - name: run-clean
-        run: |
-          make clean
-      - name: check-executables
+      - name: Clean
+        run: make clean
+      - name: Check Executables
         run: |
           IFS=',' read -ra array <<< "$EXECUTABLES"
           for arg in "${array[@]}"; do
@@ -92,35 +91,6 @@ jobs:
           done
           exit 0
 
-  # check_banned_functions:
-  #   needs: check_program_compilation
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: checkout@v4
-  #       uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
-  #     - name: run-compilation
-  #       run: make
-  #       timeout-minutes: 2
-  #     - name: check-banned
-  #       run: |
-  #         IFS=',' read -ra array <<< "$EXECUTABLES"
-  #         for arg in "${array[@]}"; do
-  #           commands=nm "$arg" | grep "U " | cut -d 'U' -f 2 | cut -d '@' -f1
-  #           IFS='\n' read -ra array <<< "$EXECUTABLES"
-  #           for cmd in "${commands}"; do
-  #             for func in "$AUTHORIZED"; do
-  #               printf "%s -- %s\n" "$cmd" "$func"
-  #               if [ "$cmd" != "$func" ]; then
-  #                 printf "::error::Invalid use of %s" "$cmd"
-  #                 exit 1
-  #               fi
-  #             done
-  #           done
-  #         done
-  #         exit 0
-
   run_tests:
     needs: check_program_compilation
     runs-on: ubuntu-latest
@@ -129,7 +99,7 @@ jobs:
     steps:
       - name: checkout@v4
         uses: actions/checkout@v4
-      - name: run-tests
+      - name: Run Unit Tests
         run: make tests_run
         timeout-minutes: 2
 
@@ -142,7 +112,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: mirroring
+      - name: Repository Mirroring
         uses: pixta-dev/repository-mirroring-action@v1
         with:
           target_repo_url: ${{ env.MIRROR_URL }}
