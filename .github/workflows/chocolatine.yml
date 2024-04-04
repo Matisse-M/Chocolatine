@@ -31,7 +31,7 @@ jobs:
         run: |
           temp=$(echo $MIRROR_URL | cut -d ':' -f 2 | sed "s/\.git//")
           if [ $temp = ${{ github.repository }} ]; then
-            printf "::notice title=The current repository is also the target repository::"
+            echo "::notice title=The current repository is also the target repository:: ${{ github.repository }}"
             exit 1
           fi
 
