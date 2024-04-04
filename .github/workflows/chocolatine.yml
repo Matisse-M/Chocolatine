@@ -33,11 +33,16 @@ jobs:
         id: new_output
         run: |
           temp=$(echo $MIRROR_URL | cut -d ':' -f 2 | sed "s/\.git//")
-          echo "::set-output name=value::$temp"
+          if [ $temp = ${{ github.repository }} ]; then
+            echo "::notice title=The target repository is also the current one::$temp"
+            echo "::set-output name=value::1"
+            exit 0
+          fi
+          echo "::set-output name=value::0"
 
   check_coding_style:
     needs: [check_repository]
-    if: ${{ needs.check_repository.outputs.target && needs.check_repository.outputs.target != github.repository }}
+    if: ${{ needs.check_repository.outputs.target == 0 }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
