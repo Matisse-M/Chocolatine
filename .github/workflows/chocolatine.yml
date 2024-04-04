@@ -52,9 +52,8 @@ jobs:
           IFS=',' read -ra array <<< "${{ env.EXECUTABLES }}"
           IFS=',' read -ra auth <<< "${{ env.AUTHORIZED }}"
           for arg in "${array[@]}"; do
-            commands=$(nm $arg | grep ' U ' | sed 's/^.* U \([^@]*\).*/\1/'| grep -v '^__libc_' |  grep -v '^__errno_')
-            IFS=$'\n' read -ra commands_array <<< "$commands"
-            for cmd in "${commands_array[@]}"; do
+            commands=$(nm "$arg" | grep "U " | cut -d 'U' -f 2 | cut -d ' ' -f 2 | cut -d '@' -f1 | grep -v __*)
+            for cmd in "$commands_array"; do
               authorized=false
               for func in "${auth[@]}"; do
                 if [[ "$cmd" == "$func" ]]; then
