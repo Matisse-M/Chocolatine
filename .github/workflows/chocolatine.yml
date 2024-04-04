@@ -63,7 +63,7 @@ jobs:
                 fi
               done
               if [[ $authorized == false ]]; then
-                echo "::error title=Unauthorized function used::$cmd\n"
+                echo "::error title=Unauthorized function used::$cmd"
                 exit 1
               fi
             done
