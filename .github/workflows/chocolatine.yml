@@ -34,10 +34,11 @@ jobs:
         run: |
           temp=$(echo $MIRROR_URL | cut -d ':' -f 2 | sed "s/\.git//")
           echo "::set-output name=value::$temp"
+          echo $target
 
   check_coding_style:
     needs: [check_repository]
-    if: ${{ needs.check_repository.outputs.target != ${ github.repository } }}
+    if: ${{ needs.check_repository.outputs.target != github.repository }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
