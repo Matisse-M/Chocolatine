@@ -55,8 +55,10 @@ jobs:
             commands=$(nm "$arg" | grep "U " | cut -d 'U' -f 2 | cut -d ' ' -f 2 | cut -d '@' -f1 | grep -v __*)
             IFS=$'\n' read -r -d '' -a commands_array <<< $commands
             for cmd in "${commands_array[@]}"; do
+              echo $cmd
               authorized=false
               for func in "${auth[@]}"; do
+                echo $auth
                 if [[ "$cmd" == "$func" ]]; then
                   authorized=true
                   break
