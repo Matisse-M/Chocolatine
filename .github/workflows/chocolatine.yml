@@ -34,6 +34,7 @@ jobs:
         run: |
           temp=$(echo $MIRROR_URL | cut -d ':' -f 2 | sed "s/\.git//")
           echo $temp
+          echo github.repository
           echo "::set-output name=value::$temp"
 
   check_coding_style:
