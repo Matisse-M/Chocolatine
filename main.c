@@ -69,7 +69,7 @@ int main(int argc, char **argv)
     ht_delete(ht, NULL);
     hash("ferfe", -1);
     ht = new_hashtable(&hash, 5);
-    printf("\nEmpty :\n");
+    mini_printf("\nEmpty :\n");
     ht_dump(ht);
     ht_insert(ht, "01", "./Documents/Tournament/Modules/Vision");
     ht_insert(ht, "02", "./Trash/Hollidays_Pics/.secret/kratos.ai");
