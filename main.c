@@ -20,9 +20,9 @@ hashtable_t *test_2(hashtable_t *ht)
     ht_delete(ht, "02");
     ht_delete(ht, "03");
     ht_delete(ht, "03");
-    printf("\nLooking for \"%s\":\"%s\"\n", " 05",
+    mini_printf("\nLooking for \"%s\":\"%s\"\n", " 05",
         ht_search(ht, "05"));
-    printf("\nLooking for \"%s\":\"%s\"\n", " 02",
+    mini_printf("\nLooking for \"%s\":\"%s\"\n", " 02",
         ht_search(ht, "02"));
     ht_dump(ht);
     mini_printf("\n deleting inexistant node\n");

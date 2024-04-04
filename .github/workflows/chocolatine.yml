@@ -52,9 +52,8 @@ jobs:
             IFS=',' read -ra array <<< $EXECUTABLES
             IFS=',' read -ra auth <<< $AUTHORIZED
             for arg in "${array[@]}"; do
-              echo $arg
               commands=$(nm "$arg" | grep "U " | cut -d 'U' -f 2 | cut -d ' ' -f 2 | cut -d '@' -f1 | grep -v __*)
-              IFS=$'\n' read -r -d '' -a commands_array <<< "$commands"
+              IFS=$'\n' read -r -d '' -a commands_array <<< $commands
               for cmd in "${commands_array[@]}"; do
                 authorized=false
                 for func in "${auth[@]}"; do
