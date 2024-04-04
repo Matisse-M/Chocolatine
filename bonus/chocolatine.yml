@@ -36,8 +36,43 @@ jobs:
             exit 1
           fi
 
-  check_coding_style:
+  check_banned_functions:
     needs: check_repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout@v4
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: run-compilation
+        run: make re
+        timeout-minutes: 2
+      - name: check-banned
+        run: |
+          IFS=',' read -ra array <<< "${{ env.EXECUTABLES }}"
+          IFS=',' read -ra auth <<< "${{ env.AUTHORIZED }}"
+          for arg in "${array[@]}"; do
+            commands=$(nm "$arg" | grep " U " | sed 's/^.* U \([^@]*\).*/\1/'| grep -v '__*')
+            temp=()
+            readarray -t temp <<< "$commands"
+            for cmd in "${temp[@]}"; do
+              authorized=false
+              for func in "${auth[@]}"; do
+                if [[ "$cmd" == "$func" ]]; then
+                  authorized=true
+                  break
+                fi
+              done
+              if [[ $authorized == false ]]; then
+                echo "::error title=Unauthorized function used::$cmd"
+                exit 1
+              fi
+            done
+          done
+          exit 0
+
+  check_coding_style:
+    needs: check_banned_functions
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
