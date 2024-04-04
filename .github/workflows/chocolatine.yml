@@ -52,7 +52,7 @@ jobs:
           IFS=',' read -ra array <<< "${{ env.EXECUTABLES }}"
           IFS=',' read -ra auth <<< "${{ env.AUTHORIZED }}"
           for arg in "${array[@]}"; do
-            commands=$(nm "$arg" | grep "U " | cut -d 'U' -f 2 | cut -d ' ' -f 2 | cut -d '@' -f1 | grep -v __*)
+            commands=$(nm "$arg" | grep " U " | sed 's/^.* U \([^@]*\).*/\1/'| grep -v '__*')
             echo $commands
             for cmd in "$commands"; do
               authorized=false
