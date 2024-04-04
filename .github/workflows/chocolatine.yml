@@ -17,7 +17,7 @@ on:
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2028/B-DOP-200-NAN-2-1-chocolatine-matisse.marsac.git"
-  EXECUTABLES: "hashtable.a,secured"
+  EXECUTABLES: "secured"
   AUTHORIZED: "write,malloc,free"
 
 jobs:
@@ -37,9 +37,42 @@ jobs:
             exit 1
           fi
 
+  check_banned_functions:
+    needs: check_repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout@v4
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: run-compilation
+        run: make
+        timeout-minutes: 2
+      - name: check-banned
+        run: |
+            IFS=',' read -ra array <<< "$EXECUTABLES"
+            IFS=',' read -ra auth <<< "$AUTHORIZED"
+            for arg in "${array[@]}"; do
+              commands=$(nm "$arg" | grep "U " | cut -d 'U' -f 2 | cut -d ' ' -f 2 | cut -d '@' -f1 | grep -v __*)
+              IFS=$'\n' read -r -d '' -a commands_array <<< "$commands"
+              for cmd in "${commands_array[@]}"; do
+                authorized=false
+                for func in "${auth[@]}"; do
+                  if [[ "$cmd" == "$func" ]]; then
+                    authorized=true
+                    break
+                  fi
+                done
+                if [[ $authorized == false ]]; then
+                  printf "::error::Unauthorized function used: %s\n" "$cmd"
+                  exit 1
+                fi
+              done
+            done
+            exit 0
 
   check_coding_style:
-    needs: check_repository
+    needs: check_banned_functions
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
