@@ -37,7 +37,7 @@ jobs:
 
   check_coding_style:
     needs: [check_repository]
-    if: ${{ needs.check_repository.outputs.target != $MIRROR_URL }}
+    if: ${{ needs.check_repository.outputs.target != env.MIRROR_URL }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
