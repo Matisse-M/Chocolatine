@@ -28,7 +28,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Check Target Repository
         run: |
           temp=$(echo $MIRROR_URL | cut -d ':' -f 2 | sed "s/\.git//")
@@ -59,6 +58,7 @@ jobs:
                 authorized=false
                 for func in "${auth[@]}"; do
                   if [[ "$cmd" == "$func" ]]; then
+                    echo $func
                     authorized=true
                     break
                   fi
