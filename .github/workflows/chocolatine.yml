@@ -45,7 +45,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: run-compilation
-        run: make
+        run: make re
         timeout-minutes: 2
       - name: check-banned
         run: |
