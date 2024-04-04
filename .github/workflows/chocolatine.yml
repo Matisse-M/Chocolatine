@@ -53,6 +53,7 @@ jobs:
           IFS=',' read -ra auth <<< "${{ env.AUTHORIZED }}"
           for arg in "${array[@]}"; do
             commands=$(nm "$arg" | grep ' U ' | sed 's/^.* U \([^@]*\).*/\1/'| grep -v '^__libc_' |  grep -v '^__errno_')
+            echo $commands
             for cmd in "$commands_array"; do
               authorized=false
               for func in "${auth[@]}"; do
