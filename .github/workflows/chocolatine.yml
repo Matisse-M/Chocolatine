@@ -21,7 +21,7 @@ env:
 
 jobs:
   check_repository:
-    runs-on: ubuntu-
+    runs-on: ubuntu-latest
     outputs:
       target: ${{ steps.generate_output.outputs.value }}
     steps:
