@@ -54,7 +54,7 @@ jobs:
           for arg in "${array[@]}"; do
             commands=$(nm "$arg" | grep "U " | cut -d 'U' -f 2 | cut -d ' ' -f 2 | cut -d '@' -f1 | grep -v __*)
             echo $commands
-            IFS=$'\n' read -r -d '' -a commands_array <<< "$commands"
+            IFS=$' ' read -r -d '' -a commands_array <<< "$commands"
             echo $commands_array
             for cmd in "${commands_array[@]}"; do
               echo $cmd
