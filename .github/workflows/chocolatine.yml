@@ -21,22 +21,23 @@ env:
 
 jobs:
   check_repository:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-
+    outputs:
+      target: ${{ steps.generate_output.outputs.value }}
     steps:
       - name: checkout@v4
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Check Target Repository
+        id: new_output
         run: |
           temp=$(echo $MIRROR_URL | cut -d ':' -f 2 | sed "s/\.git//")
-          if [ $temp = ${{ github.repository }} ]; then
-            echo "::notice title=The current repository is also the target repository:: ${{ github.repository }}"
-            exit 1
-          fi
+          echo "::set-output name=value::$temp"
 
   check_coding_style:
     needs: [check_repository]
+    if: ${{ needs.check_repository.outputs.target != env.MIRROR_URL }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
