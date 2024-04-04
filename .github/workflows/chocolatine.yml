@@ -53,10 +53,8 @@ jobs:
           IFS=',' read -ra auth <<< "${{ env.AUTHORIZED }}"
           for arg in "${array[@]}"; do
             commands=$(nm "$arg" | grep "U " | cut -d 'U' -f 2 | cut -d ' ' -f 2 | cut -d '@' -f1 | grep -v __*)
-            # IFS=$'\n' read -r -d '' -a commands_array <<< "$commands"
-            # echo $commands_array
+            IFS=$'\n' read -r -a commands_array <<< "$commands"
             for cmd in "${commands[@]}"; do
-              echo $cmd
               authorized=false
               for func in "${auth[@]}"; do
                 if [[ "$cmd" == "$func" ]]; then
