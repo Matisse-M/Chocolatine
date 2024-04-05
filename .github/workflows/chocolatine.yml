@@ -31,7 +31,7 @@ jobs:
       - name: checkout@v4
         uses: actions/checkout@v4
 
-      - name: Drawing
+      - name: CLICK HERE TO SEE "ART"
         run: |
           echo "::notice title=RONDOUDOU::CLICK HERE"
           echo "
