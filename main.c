@@ -67,7 +67,7 @@ int main(int argc, char **argv)
     ht_insert(ht, NULL, NULL);
     ht_search(ht, NULL);
     ht_delete(ht, NULL);
-    hash("ferfe", -1);
+    hash("ferfe", -1);aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     ht = new_hashtable(&hash, 5);
     mini_printf("\nEmpty :\n");
     ht_dump(ht);
