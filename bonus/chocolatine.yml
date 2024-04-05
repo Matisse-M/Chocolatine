@@ -7,6 +7,7 @@
 
 name: chocolatine
 
+
 on:
   push:
     branches-ignore:
@@ -15,29 +16,37 @@ on:
     branches-ignore:
       - "ga-ignore-*"
 
+
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2028/B-DOP-200-NAN-2-1-chocolatine-matisse.marsac.git"
   EXECUTABLES: "secured"
   AUTHORIZED: "write,malloc,free"
 
+
 jobs:
   Check Repository to Start Jobs:
     runs-on: ubuntu-latest
+    outputs:
+      target: ${{ steps.new_output.outputs.value }}
     steps:
       - name: checkout@v4
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+
       - name: Check Target Repository
+        id: new_output
         run: |
           temp=$(echo $MIRROR_URL | cut -d ':' -f 2 | sed "s/\.git//")
           if [ $temp = ${{ github.repository }} ]; then
-            printf "::notice::The current repository is also the target repository\n"
-            exit 1
+            echo "::notice title=The target repository is also the current one::$temp"
+            echo "value=1" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+          echo "value=0" >> "$GITHUB_OUTPUT"
+          exit 0
 
   Check Any Coding Style Errors:
     needs: [Check Repository to Start Jobs]
+    if: ${{ needs.Check Repository to Start Jobs.outputs.target == 0 }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/epitech/coding-style-checker:latest
@@ -73,11 +82,14 @@ jobs:
     steps:
       - name: checkout@v4
         uses: actions/checkout@v4
+
       - name: Compilation
         run: make
         timeout-minutes: 2
+
       - name: Clean
         run: make clean
+
       - name: Check Executables
         run: |
           IFS=',' read -ra array <<< "$EXECUTABLES"
@@ -97,22 +109,22 @@ jobs:
     steps:
       - name: checkout@v4
         uses: actions/checkout@v4
+
       - name: Run Unit Tests
         run: make tests_run
         timeout-minutes: 2
 
   Check Banned Functions in Executables:
     needs: [Run Unit Tests]
-    if: ${{ needs.check_repository.outputs.target == 0 }}
     runs-on: ubuntu-latest
     steps:
       - name: checkout@v4
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+
       - name: run-compilation
         run: make re
         timeout-minutes: 2
+
       - name: check-banned
         run: |
           IFS=',' read -ra array <<< "${{ env.EXECUTABLES }}"
@@ -146,6 +158,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Repository Mirroring
         uses: pixta-dev/repository-mirroring-action@v1
         with:
