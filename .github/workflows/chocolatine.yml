@@ -48,7 +48,7 @@ jobs:
 
       - name: Drawing
         run: |
-          echo "::notice title=RONDOUDOU,line=12::CLICK HERE"
+          echo "::notice title=RONDOUDOU::CLICK HERE"
           echo "
                     ⢀⣀⣀⡠⠖⢉⣌⢆
           ⠀⠀⠀⠀⠀⠀⠀⣠⠚⠉⠀⠈⠉⠲⣿⣿⡜⡀
