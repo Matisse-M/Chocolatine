@@ -21,6 +21,7 @@ env:
 
 jobs:
   check_repository:
+    name: Check Repository to Start Jobs
     runs-on: ubuntu-latest
     outputs:
       target: ${{ steps.new_output.outputs.value }}
@@ -41,6 +42,7 @@ jobs:
           exit 0
 
   check_coding_style:
+    name: Check Any Coding Style Errors
     needs: [check_repository]
     if: ${{ needs.check_repository.outputs.target == 0 }}
     runs-on: ubuntu-latest
@@ -71,6 +73,7 @@ jobs:
           fi
 
   check_program_compilation:
+    name: Check Program Compilation
     needs: [check_coding_style]
     runs-on: ubuntu-latest
     container:
@@ -95,6 +98,7 @@ jobs:
           exit 0
 
   run_tests:
+    name: Run Unit Tests
     needs: [check_program_compilation]
     runs-on: ubuntu-latest
     container:
@@ -107,6 +111,7 @@ jobs:
         timeout-minutes: 2
 
   push_to_mirror:
+    name: Push to Target Repository
     needs: [run_tests]
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
