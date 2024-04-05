@@ -48,7 +48,8 @@ jobs:
 
       - name: Drawing
         run: |
-          echo "::notice title=RONDOUDOU,line=12::⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⡠⠖⢉⣌⢆
+          echo "::notice title=RONDOUDOU,line=12::
+                    ⢀⣀⣀⡠⠖⢉⣌⢆
           ⠀⠀⠀⠀⠀⠀⠀⣠⠚⠉⠀⠈⠉⠲⣿⣿⡜⡀
           ⡔⢉⣙⣓⣒⡲⠮⡇⠀⠀⠀⠀⠀⠀⠘⡿⡇⡇
           ⡇⠘⣿⣿⣿⠏⠀⠀⠠⣀⡀⠀⠀⠀⠀⡇⠈⠳⡄
